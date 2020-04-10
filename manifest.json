@@ -1,0 +1,16 @@
+{
+    "tutorials": [
+        {
+            "title": "Workshop Overview",
+            "description":"Workhop Overview",
+            "publisheddate": "04/10/2020",
+            "filename":"./about-the-workshop/content.md"
+        },
+        {
+            "title": "Lab: Database Backup Service to OCI",
+            "description":"Database Backup Service to OCI",
+            "publisheddate": "04/10/2020",
+            "filename":"./lab000/Database Backup Service to OCI.md"
+        }
+    ]
+}
