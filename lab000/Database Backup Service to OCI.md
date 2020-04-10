@@ -18,7 +18,8 @@ Oracle Database Cloud Backup Module is the cloud backup module that is installed
 
 ### Required Artifacts
 
-On premise Oracle Database version 11.2.0.4 or higher
+- On premise Oracle Database version 11.2.0.4 or higher
+- An OCI account with proper priviledge to access the object stortage in OCI
 
 
 ## Start the On-Premise Oracle Database
@@ -111,7 +112,7 @@ In this lab, You will download the cloud backup module, prepare the keys and OCI
 
    Click **All Supported Platforms**, Accept the license agreement, and provide your OTN user name and password when prompted. Then download the ZIP file that contains the installer (**opc_installer.zip**) to your system. for example, the download file under the /home/oracle/Downloads directory.
 
-2. Open up a terminal window, cd into the /home/oracle/Download directory. Extract the contents of the zip file. The file contains two directories, **oci_installer** and **opc_installer**, and a README file.
+2. Open up a terminal window, cd into the /home/oracle/Download directory. Extract the contents of the zip file. The file contains two directories: oci_installer and opc_installer, and a README file.
 
    ```
    [oracle@dbhost ~]$ cd /home/oracle/Downloads/
@@ -178,13 +179,13 @@ For the Oracle Database Backup Cloud Service, you need to have the identifiers a
 1. If you haven't already, create a `.oci` directory to store the credentials:
 
    ```
-   mkdir ~/.oci
+mkdir ~/.oci
    ```
 
 2. Generate the private key with one of the following commands.
 
    ```
-   openssl genrsa -out ~/.oci/oci_api_key.pem 2048
+openssl genrsa -out ~/.oci/oci_api_key.pem 2048
    ```
 
    
@@ -192,7 +193,7 @@ For the Oracle Database Backup Cloud Service, you need to have the identifiers a
 3. Ensure that only you can read the private key file:
 
    ```
-   chmod go-rwx ~/.oci/oci_api_key.pem
+chmod go-rwx ~/.oci/oci_api_key.pem
    ```
 
    
@@ -200,7 +201,7 @@ For the Oracle Database Backup Cloud Service, you need to have the identifiers a
 4. Generate the public key:
 
    ```
-   openssl rsa -pubout -in ~/.oci/oci_api_key.pem -out ~/.oci/oci_api_key_public.pem
+openssl rsa -pubout -in ~/.oci/oci_api_key.pem -out ~/.oci/oci_api_key_public.pem
    ```
 
    
@@ -208,7 +209,7 @@ For the Oracle Database Backup Cloud Service, you need to have the identifiers a
 5. Cat the public key. Copy all the content of the public key.
 
    ```
-   cat ~/.oci/oci_api_key_public.pem
+cat ~/.oci/oci_api_key_public.pem
    ```
 
    
@@ -216,7 +217,7 @@ For the Oracle Database Backup Cloud Service, you need to have the identifiers a
 6. Get the key's fingerprint with the following OpenSSL command. If you are using Windows you can get the fingerprint with Git Bash for Windows.
 
    ```
-   openssl rsa -pubout -outform DER -in ~/.oci/oci_api_key.pem | openssl md5 -c
+openssl rsa -pubout -outform DER -in ~/.oci/oci_api_key.pem | openssl md5 -c
    ```
 
    When you upload the public key in the Console, the fingerprint is also automatically displayed there.
@@ -916,12 +917,10 @@ We now need to restore the database to the point in time before the **mstar** ta
 
    ```
    [oracle@dbhost ~]$ sqlplus johnsmith/johnsmith@orclpdb
-   
    SQL*Plus: Release 19.0.0.0.0 - Production on Fri Apr 10 03:53:13 2020
    Version 19.5.0.0.0
    
    Copyright (c) 1982, 2019, Oracle.  All rights reserved.
-   
    
    Connected to:
    Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
@@ -930,7 +929,9 @@ We now need to restore the database to the point in time before the **mstar** ta
    SQL> select * from mstars;
    
    FIRSTNAME	     LASTNAME
+   
    -------------------- --------------------
+   
    Jimmy		     Stewart
    Katharine	     Hepburn
    Tom		     Hanks
@@ -939,7 +940,8 @@ We now need to restore the database to the point in time before the **mstar** ta
    SQL> 
    ```
 
-   
+
+
 
 ## Appendix
 
@@ -947,11 +949,12 @@ In case your backup does not complete properly you can clean up the partial back
 
 - In RMAN type:
 
-  ```
-  delete noprompt backupset tag 'onprem';
+   ```
+delete noprompt backupset tag 'onprem';
   ```
 
 - Rerun the backup 
   ```
-  backup as compressed backupset tag 'onprem' database plus archivelog;
+backup as compressed backupset tag 'onprem' database plus archivelog;
+
   ```
