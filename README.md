@@ -4,7 +4,7 @@
 
 Oracle Database Backup Service (ODBS) is a backup-as-a-service offering that enables customers to store their backups securely in the Oracle cloud. ODBS provides a transparent, scalable, efficient, and elastic cloud storage platform for Oracle database backups. The client side Oracle Database Cloud Backup Module which is used with Recovery Manager (RMAN) transparently handles the backup and restore operations.
 
-In this work shop, you will learn how to backup and recover your on-premise database to the OCI. 
+In this workshop, you will learn how to backup and recover your on-premise database to the OCI. 
 
 ## Workshop Requirements
 
