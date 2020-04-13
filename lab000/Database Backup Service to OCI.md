@@ -147,7 +147,7 @@ In this lab, You will download the cloud backup module, prepare the keys and OCI
 
    
 
-3. The **oci_installer** directory contain the Oracle Database Cloud Backup Module for OCI, the **opc_installer** directory contain the Oracle Database Cloud Backup Module for OCI Classic. In the following steps we will use Oracle Cloud Infrastructure, so cd into the oci_installer directory.
+3. The **oci_installer** directory contain the Oracle Database Cloud Backup Module for OCI, the **opc_installer** directory contain the Oracle Database Cloud Backup Module for OCI Classic. In the following steps we will use Oracle Cloud Infrastructure, so cd into the **oci_installer** directory.
 
    ```
    [oracle@dbhost opc_installer]$ cd oci_installer/
@@ -240,9 +240,9 @@ To see more information about generating the keys and finding your OCIDs, refer 
 
 ### Install the Backup Module
 
-Run the installer, oci_install.jar. This example shows how the installer automatically downloads the Oracle Database Cloud Backup Module for OCI for your operating system, creates a wallet that contains Oracle Database Backup Cloud Service identifiers and credentials, creates the backup module configuration file, and downloads the library necessary for backups and restores to Oracle Cloud Infrastructure.  Provide the required parameters in one line, with each parameter preceded by a hyphen and followed by its value. 
+Run the installer, **oci_install.jar** to install the backup module. This example shows how the installer automatically downloads the Oracle Database Cloud Backup Module for OCI for your operating system, creates a wallet that contains Oracle Database Backup Cloud Service identifiers and credentials, creates the backup module configuration file, and downloads the library necessary for backups and restores to Oracle Cloud Infrastructure.  Provide the required parameters in one line, with each parameter preceded by a hyphen and followed by its value. 
 
-The following table lists the required and some optinal parameters.
+The following table lists the required and some optional parameters.
 
 | **Parameter**   | **Description**                                              |
 | --------------- | ------------------------------------------------------------ |
@@ -263,10 +263,10 @@ It also downloads a library file **libopc.so** (Linux and Unix) or **oraopc.dll*
 
 It also downloads cwallet.sso an Oracle wallet that securely stores Oracle Object Storage credentials.  This file is used during RMAN backup and restore operations.
 
-1. Run the following command to install the backup module.
+1. Run the following command to install the backup module, change the parameters values base on your environment.
 
 ```
-[oracle@dbhost oci_installer]$ java -jar oci_install.jar -host https://objectstorage.ap-seoul-1.oraclecloud.com -pvtKeyFile ~/.oci/oci_api_key.pem -pubFingerPrint fd:67:91:7a:60:5d:04:d3:65:8e:21:8d:ec:6a:24:8f -uOCID ocid1.user.oc1..aaaaaaaav2y6juu6mcps2ofzyklpxaznyqzs3cul5nrqmtrnumd3f6g6oo7a -tOCID ocid1.tenancy.oc1..aaaaaaaafj37mytx22oquorcznlfuh77cd45int7tt7fo27tuejsfqbybzrq -cOCID ocid1.compartment.oc1..aaaaaaaa6xdd35koxkce2mk2aqfwphtcdb36ne7qoomtfqgjzkcuglzl2lua -walletDir $ORACLE_HOME/dbs/oci_wallet -libDir $ORACLE_HOME/lib -bucket db_backups
+[oracle@dbhost oci_installer]$ <copy>java -jar oci_install.jar -host https://objectstorage.ap-seoul-1.oraclecloud.com -pvtKeyFile ~/.oci/oci_api_key.pem -pubFingerPrint fd:67:91:7a:60:5d:04:d3:65:8e:21:8d:ec:6a:24:8f -uOCID ocid1.user.oc1..aaaaaaaav2y6juu6mcps2ofzyklpxaznyqzs3cul5nrqmtrnumd3f6g6oo7a -tOCID ocid1.tenancy.oc1..aaaaaaaafj37mytx22oquorcznlfuh77cd45int7tt7fo27tuejsfqbybzrq -cOCID ocid1.compartment.oc1..aaaaaaaa6xdd35koxkce2mk2aqfwphtcdb36ne7qoomtfqgjzkcuglzl2lua -walletDir $ORACLE_HOME/dbs/oci_wallet -libDir $ORACLE_HOME/lib -bucket db_backups</copy>
 
 
 Oracle Database Cloud Backup Module Install Tool, build 19.3.0.0.0DBBKPCSBP_2019-10-16
@@ -278,16 +278,17 @@ Downloading Oracle Database Cloud Backup Module Software Library from Oracle Clo
 Download complete.
 [oracle@dbhost oci_installer]$
 ```
-2. Verify these files are present by entering the following commands
+2. Verify these files are present by entering the following commands:
 
 ```
 [oracle@dbhost oci_installer]$ ls $ORACLE_HOME/lib/libopc.so
 /u01/app/oracle/product/19c/dbhome_1/lib/libopc.so
+
 [oracle@dbhost oci_installer]$ ls $ORACLE_HOME/dbs/opc*
 /u01/app/oracle/product/19c/dbhome_1/dbs/opcORCL.ora
+
 [oracle@dbhost oci_installer]$ ls $ORACLE_HOME/dbs/oci_wallet
 cwallet.sso  cwallet.sso.lck
-[oracle@dbhost oci_installer]$
 ```
 
 ##Prepare the on premise database
@@ -913,7 +914,7 @@ We now need to restore the database to the point in time before the **mstar** ta
 
    
 
-6. Once the script completes, go back to the terminal window you used to connect with sqlplus and re-connect back into the DEMO container as demouser/demouser and query to see if the **mstars** table has been recovered.
+6. Once the script completes, go back to the terminal window you used to connect with sqlplus and re-connect back into the **orclpdb** container as **johnsmith/johnsmith** and query to see if the **mstars** table has been recovered.
 
    ```
    [oracle@dbhost ~]$ sqlplus johnsmith/johnsmith@orclpdb
@@ -958,3 +959,5 @@ In case your backup does not complete properly you can clean up the partial back
 <copy>backup as compressed backupset tag 'onprem' database plus archivelog;</copy>
 
   ```
+  
+  
