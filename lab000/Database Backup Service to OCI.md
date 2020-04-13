@@ -179,13 +179,13 @@ For the Oracle Database Backup Cloud Service, you need to have the identifiers a
 1. If you haven't already, create a `.oci` directory to store the credentials:
 
    ```
-mkdir ~/.oci
+<copy>mkdir ~/.oci</copy>
    ```
 
 2. Generate the private key with one of the following commands.
 
    ```
-openssl genrsa -out ~/.oci/oci_api_key.pem 2048
+<copy>openssl genrsa -out ~/.oci/oci_api_key.pem 2048</copy>
    ```
 
    
@@ -193,7 +193,7 @@ openssl genrsa -out ~/.oci/oci_api_key.pem 2048
 3. Ensure that only you can read the private key file:
 
    ```
-chmod go-rwx ~/.oci/oci_api_key.pem
+<copy>chmod go-rwx ~/.oci/oci_api_key.pem</copy>
    ```
 
    
@@ -201,7 +201,7 @@ chmod go-rwx ~/.oci/oci_api_key.pem
 4. Generate the public key:
 
    ```
-openssl rsa -pubout -in ~/.oci/oci_api_key.pem -out ~/.oci/oci_api_key_public.pem
+<copy>openssl rsa -pubout -in ~/.oci/oci_api_key.pem -out ~/.oci/oci_api_key_public.pem</copy>
    ```
 
    
@@ -209,7 +209,7 @@ openssl rsa -pubout -in ~/.oci/oci_api_key.pem -out ~/.oci/oci_api_key_public.pe
 5. Cat the public key. Copy all the content of the public key.
 
    ```
-cat ~/.oci/oci_api_key_public.pem
+<copy>cat ~/.oci/oci_api_key_public.pem</copy>
    ```
 
    
@@ -217,7 +217,7 @@ cat ~/.oci/oci_api_key_public.pem
 6. Get the key's fingerprint with the following OpenSSL command. If you are using Windows you can get the fingerprint with Git Bash for Windows.
 
    ```
-openssl rsa -pubout -outform DER -in ~/.oci/oci_api_key.pem | openssl md5 -c
+<copy>openssl rsa -pubout -outform DER -in ~/.oci/oci_api_key.pem | openssl md5 -c</copy>
    ```
 
    When you upload the public key in the Console, the fingerprint is also automatically displayed there.
@@ -444,7 +444,7 @@ Before we can do backups to the Cloud storage location in your account, you need
 2. Commands in RMAN can be run in blocks so you can do a sequence all at once. Copy and Paste from the entire run block as shown below:
 
    ```
-   run {
+   <copy>run {
    configure retention policy to recovery window of 30 days;
    configure channel device type 'sbt_tape' MAXPIECESIZE 2 G FORMAT  'onprem_%d_%U' PARMS 'SBT_LIBRARY=libopc.so, ENV=(OPC_PFILE=/u01/app/oracle/product/19c/dbhome_1/dbs/opcORCL.ora)';
    configure encryption for database on;
@@ -452,7 +452,7 @@ Before we can do backups to the Cloud storage location in your account, you need
    configure backup optimization on;
    configure compression algorithm 'MEDIUM' as of release 'default' optimize for load true;
    configure default device type to sbt_tape;
-   }
+   }</copy>
    ```
 
    
@@ -557,7 +557,7 @@ For security reasons, backing up to the Oracle Cloud requires that encryption is
 2. Copy and Paste the backup command
 
    ```
-   backup as compressed backupset tag 'onprem' database plus archivelog;
+   <copy>backup as compressed backupset tag 'onprem' database plus archivelog;</copy>
    ```
 
    The backup will commence. Depending on the speed of your network this will take about 30 minutes. The database control files and SPFILE are the last part to be backed up.
@@ -829,7 +829,7 @@ We now need to restore the database to the point in time before the **mstar** ta
 4. Copy and Paste the RMAN run block that does the restore / recovery to our “gold” restore point. The final step opens the database and resets the logs since we’ve restored to a previous point in time.
 
    ```
-   run {
+   <copy>run {
    
      restore database;
    
@@ -837,7 +837,7 @@ We now need to restore the database to the point in time before the **mstar** ta
    
      alter database open resetlogs;
    
-     }
+     }</copy>
    ```
 
     
@@ -950,11 +950,11 @@ In case your backup does not complete properly you can clean up the partial back
 - In RMAN type:
 
    ```
-delete noprompt backupset tag 'onprem';
+<copy>delete noprompt backupset tag 'onprem';</copy>
   ```
 
 - Rerun the backup 
   ```
-backup as compressed backupset tag 'onprem' database plus archivelog;
+<copy>backup as compressed backupset tag 'onprem' database plus archivelog;</copy>
 
   ```
